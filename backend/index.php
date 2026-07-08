@@ -10,6 +10,25 @@ header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Content-Type: application/json; charset=utf-8");
 
+// Register global exception handler to return clean JSON errors
+set_exception_handler(function ($e) {
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Server Exception: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(),
+        'data' => null
+    ]);
+    exit();
+});
+
+// Convert PHP errors/warnings to exceptions so they are caught by the exception handler
+set_error_handler(function ($severity, $message, $file, $line) {
+    if (!(error_reporting() & $severity)) {
+        return;
+    }
+    throw new ErrorException($message, 0, $severity, $file, $line);
+});
+
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -113,20 +132,26 @@ if (preg_match('#^api/auth/register$#', $path)) {
             jsonResponse(false, "Format email tidak valid", null, 422);
         }
 
-        // Check if email already registered
-        $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        if ($stmt->fetchColumn() > 0) {
-            jsonResponse(false, "Email sudah terdaftar", null, 422);
+        try {
+            // Check if email already registered
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            if ($stmt->fetchColumn() > 0) {
+                jsonResponse(false, "Email sudah terdaftar", null, 422);
+            }
+
+            // Hash password and generate session token
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $token = bin2hex(random_bytes(32));
+
+            $stmt = $pdo->prepare("INSERT INTO users (name, email, password, token) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $hashedPassword, $token]);
+            $userId = $pdo->lastInsertId();
+        } catch (PDOException $e) {
+            jsonResponse(false, "Database Error: " . $e->getMessage(), null, 500);
+        } catch (Exception $e) {
+            jsonResponse(false, "Server Error: " . $e->getMessage(), null, 500);
         }
-
-        // Hash password and generate session token
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $token = bin2hex(random_bytes(32));
-
-        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, token) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$name, $email, $hashedPassword, $token]);
-        $userId = $pdo->lastInsertId();
 
         $user = [
             'id' => (int)$userId,
