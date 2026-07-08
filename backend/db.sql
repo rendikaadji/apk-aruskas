@@ -3,8 +3,8 @@
 -- Database Target: MySQL / MariaDB (Multi-User Configuration)
 -- --------------------------------------------------------
 
-CREATE DATABASE IF NOT EXISTS `aruskas`;
-USE `aruskas`;
+-- CREATE DATABASE IF NOT EXISTS `aruskas`;
+-- USE `aruskas`;
 
 -- 1. Users Table
 CREATE TABLE IF NOT EXISTS `users` (

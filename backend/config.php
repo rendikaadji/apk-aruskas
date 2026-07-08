@@ -4,11 +4,11 @@
  * ArusKas REST API Backend
  */
 
-define('DB_HOST', '127.0.0.1');
+define('DB_HOST', 'localhost');
 define('DB_PORT', '3306');
-define('DB_NAME', 'aruskas');
-define('DB_USER', 'root');
-define('DB_PASS', ''); // Default empty password for local mysql root users
+define('DB_NAME', 'site4584_star');
+define('DB_USER', 'site4584_apk');
+define('DB_PASS', '+1&Q{{xjyipVQr@W');
 
 // Dynamically resolve base URL for receipt image links based on requesting client
 // (The emulator requests via '10.0.2.2:8000', while localhost requests via '127.0.0.1:8000')
