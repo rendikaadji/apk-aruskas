@@ -272,7 +272,7 @@
         android:id="@+id/layout_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#99FAFAFA"
+        android:background="@color/colorLoadingBackground"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone">

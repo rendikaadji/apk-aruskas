@@ -28,6 +28,9 @@
     <color name="colorShortcutRecurringBg">#E6F4FF</color>
     <color name="colorShortcutRecurring">#0984E3</color>
 
+    <!-- Loading overlay background -->
+    <color name="colorLoadingBackground">#99FAFAFA</color>
+
     <!-- Standard colors -->
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
