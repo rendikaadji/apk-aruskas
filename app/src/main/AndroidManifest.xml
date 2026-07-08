@@ -17,9 +17,9 @@
     <application
         android:name=".ArusKasApplication"
         android:allowBackup="true"
-        android:icon="@drawable/aruskas_logo_v2"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/aruskas_logo_v2"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArusKas"
         android:usesCleartextTraffic="true"
