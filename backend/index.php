@@ -262,7 +262,7 @@ elseif (preg_match('#^api/categories/(\d+)$#', $path, $matches)) {
     if (!$existingCat) {
         jsonResponse(false, "Kategori tidak ditemukan", null, 404);
     }
-    if ($existingCat['user_id'] !== $userId) {
+    if ($existingCat['user_id'] === null || (int)$existingCat['user_id'] !== $userId) {
         jsonResponse(false, "Kategori bawaan/global tidak dapat diubah atau dihapus", null, 403);
     }
     
@@ -504,7 +504,7 @@ elseif (preg_match('#^api/transactions/(\d+)$#', $path, $matches)) {
     $stmt = $pdo->prepare("SELECT * FROM transactions WHERE id = ?");
     $stmt->execute([$id]);
     $txRow = $stmt->fetch();
-    if (!$txRow || $txRow['user_id'] !== $userId) {
+    if (!$txRow || (int)$txRow['user_id'] !== $userId) {
         jsonResponse(false, "Transaksi tidak ditemukan", null, 404);
     }
 
@@ -749,7 +749,7 @@ elseif (preg_match('#^api/budgets/(\d+)$#', $path, $matches)) {
     $stmt = $pdo->prepare("SELECT * FROM budgets WHERE id = ?");
     $stmt->execute([$id]);
     $budgetRow = $stmt->fetch();
-    if (!$budgetRow || $budgetRow['user_id'] !== $userId) {
+    if (!$budgetRow || (int)$budgetRow['user_id'] !== $userId) {
         jsonResponse(false, "Anggaran tidak ditemukan", null, 404);
     }
 
@@ -875,7 +875,7 @@ elseif (preg_match('#^api/recurring-transactions/(\d+)$#', $path, $matches)) {
     $stmt = $pdo->prepare("SELECT * FROM recurring_transactions WHERE id = ?");
     $stmt->execute([$id]);
     $recurringRow = $stmt->fetch();
-    if (!$recurringRow || $recurringRow['user_id'] !== $userId) {
+    if (!$recurringRow || (int)$recurringRow['user_id'] !== $userId) {
         jsonResponse(false, "Tagihan berulang tidak ditemukan", null, 404);
     }
 
