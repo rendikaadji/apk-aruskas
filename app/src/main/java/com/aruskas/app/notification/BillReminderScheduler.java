@@ -47,6 +47,7 @@ public class BillReminderScheduler {
         intent.putExtra(BillReminderReceiver.EXTRA_BILL_TITLE, recurring.getTitle());
         intent.putExtra(BillReminderReceiver.EXTRA_BILL_AMOUNT, recurring.getAmount());
         intent.putExtra(BillReminderReceiver.EXTRA_BILL_DUE_DAY, recurring.getDueDay());
+        intent.putExtra(BillReminderReceiver.EXTRA_BILL_CATEGORY_ID, recurring.getCategoryId());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,

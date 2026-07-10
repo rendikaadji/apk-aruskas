@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import com.aruskas.app.ArusKasApplication;
 import com.aruskas.app.R;
 import com.aruskas.app.activity.RecurringTransactionActivity;
+import com.aruskas.app.activity.TransactionEditorActivity;
 
 /**
  * BroadcastReceiver that fires local notifications for recurring bill reminders.
@@ -29,6 +30,7 @@ public class BillReminderReceiver extends BroadcastReceiver {
     public static final String EXTRA_BILL_TITLE = "bill_title";
     public static final String EXTRA_BILL_AMOUNT = "bill_amount";
     public static final String EXTRA_BILL_DUE_DAY = "bill_due_day";
+    public static final String EXTRA_BILL_CATEGORY_ID = "bill_category_id";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -36,6 +38,7 @@ public class BillReminderReceiver extends BroadcastReceiver {
         double amount = intent.getDoubleExtra(EXTRA_BILL_AMOUNT, 0);
         int dueDay = intent.getIntExtra(EXTRA_BILL_DUE_DAY, 1);
         int billId = intent.getIntExtra(EXTRA_BILL_ID, 0);
+        int categoryId = intent.getIntExtra(EXTRA_BILL_CATEGORY_ID, -1);
 
         Log.d(TAG, "Bill reminder triggered for: " + title);
 
@@ -43,9 +46,12 @@ public class BillReminderReceiver extends BroadcastReceiver {
         String bodyText = "Tagihan \"" + title + "\" sebesar " + formattedAmount
                 + " jatuh tempo tanggal " + dueDay + " bulan ini.";
 
-        // Intent to open RecurringTransactionActivity when notification is tapped
-        Intent tapIntent = new Intent(context, RecurringTransactionActivity.class);
+        // Intent to open TransactionEditorActivity with prefilled form details
+        Intent tapIntent = new Intent(context, TransactionEditorActivity.class);
         tapIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        tapIntent.putExtra("prefill_title", title);
+        tapIntent.putExtra("prefill_amount", amount);
+        tapIntent.putExtra("prefill_category_id", categoryId);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context,
@@ -58,7 +64,7 @@ public class BillReminderReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ArusKasApplication.CHANNEL_BILL_REMINDERS)
                 .setSmallIcon(com.aruskas.app.R.drawable.ic_notification)
-                .setContentTitle("\uD83D\uDCCB Pengingat Tagihan")
+                .setContentTitle("📋 Pengingat Tagihan")
                 .setContentText(bodyText)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(bodyText))
                 .setAutoCancel(true)
