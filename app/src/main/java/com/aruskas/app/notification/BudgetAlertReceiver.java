@@ -69,7 +69,7 @@ public class BudgetAlertReceiver extends BroadcastReceiver {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ArusKasApplication.CHANNEL_BUDGET_ALERTS)
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setSmallIcon(com.aruskas.app.R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(bodyText)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(bodyText))

@@ -116,7 +116,7 @@ public class ArusKasFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, ArusKasApplication.CHANNEL_BILL_REMINDERS)
-                        .setSmallIcon(android.R.drawable.ic_popup_reminder) // fallback icon
+                        .setSmallIcon(com.aruskas.app.R.drawable.ic_notification) // custom icon
                         .setContentTitle(title != null ? title : "Tagihan Mendekati Jatuh Tempo")
                         .setContentText(body)
                         .setAutoCancel(true)
@@ -146,7 +146,7 @@ public class ArusKasFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, ArusKasApplication.CHANNEL_BUDGET_ALERTS)
-                        .setSmallIcon(android.R.drawable.ic_dialog_alert) // fallback icon
+                        .setSmallIcon(com.aruskas.app.R.drawable.ic_notification) // custom icon
                         .setContentTitle(title != null ? title : "Peringatan Anggaran")
                         .setContentText(body)
                         .setAutoCancel(true)
@@ -176,7 +176,7 @@ public class ArusKasFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(android.R.drawable.ic_dialog_info)
+                        .setSmallIcon(com.aruskas.app.R.drawable.ic_notification)
                         .setContentTitle(title != null ? title : "ArusKas")
                         .setContentText(body)
                         .setAutoCancel(true)

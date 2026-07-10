@@ -57,7 +57,7 @@ public class BillReminderReceiver extends BroadcastReceiver {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, ArusKasApplication.CHANNEL_BILL_REMINDERS)
-                .setSmallIcon(android.R.drawable.ic_popup_reminder)
+                .setSmallIcon(com.aruskas.app.R.drawable.ic_notification)
                 .setContentTitle("\uD83D\uDCCB Pengingat Tagihan")
                 .setContentText(bodyText)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(bodyText))
